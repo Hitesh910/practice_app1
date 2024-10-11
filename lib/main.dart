@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:practice_app1/utils/app_route.dart';
 
 void main() {
-  runApp(MaterialApp(
-    routes: app_routes,
-  ),);
+  runApp(
+    MaterialApp(
+      routes: app_routes,
+    ),
+  );
 }
