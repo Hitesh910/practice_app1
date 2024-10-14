@@ -26,45 +26,97 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("E commerse App"),
+        backgroundColor: Colors.white,
+        title: const Text("E commerce App"),
       ),
       body: Obx(
-          () =>  GridView.builder(
+        () => GridView.builder(
           itemCount: controller.dataList.length,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
           itemBuilder: (context, index) {
-            return Container(
-              height: 100,
-              width: 100,
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.amber.shade200,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image:
-                              NetworkImage("${controller.dataList[index].image}"),
+            return Obx(
+              () =>  Container(
+                // height: height * 1,
+                // width: width * 0.5,
+                margin: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                      spreadRadius: -0.5,
+                      blurRadius: 0.2,
+                    ),
+                  ],
+                  color: Colors.amber.shade200,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  // mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: SizedBox(
+                        height: height * 0.12,
+                        width: width * 0.4,
+                        child: Container(
+                          padding: const EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(2),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                  "${controller.dataList[index].image}"),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          // child: Text("${controller.dataList[index].title}"),
                         ),
                       ),
-                      // child: Text("${controller.dataList[index].title}"),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                    child: Text("${controller.dataList[index].title}"),
-                  ),
-                ],
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "${controller.dataList[index].title}",
+                        style: const TextStyle(
+                          // overflow: TextOverflow.ellipsis,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "₹${controller.dataList[index].price}",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.favorite,
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
           },
