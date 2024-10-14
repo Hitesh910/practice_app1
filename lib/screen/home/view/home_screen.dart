@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_common/get_reset.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:practice_app1/screen/home/model/databse_model.dart';
+import 'package:practice_app1/utils/helper/database_helper.dart';
 
 import '../../../utils/api_helper.dart';
 import '../controller/home_controller.dart';
@@ -33,6 +35,20 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text("E commerce App"),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                 PopupMenuItem(
+                  child: const Text("Database"),
+                  onTap: () {
+                    Get.toNamed("/database");
+                  },
+                ),
+              ];
+            },
+          )
+        ],
       ),
       body: Obx(
         () => GridView.builder(
@@ -42,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           itemBuilder: (context, index) {
             return Obx(
-              () =>  Container(
+              () => Container(
                 // height: height * 1,
                 // width: width * 0.5,
                 margin: const EdgeInsets.all(8),
@@ -106,7 +122,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              DatabaseModel model = DatabaseModel(
+                                  title: controller.dataList[index].title,
+                                  price: controller.dataList[index].price,
+                                  desc: controller.dataList[index].description);
+                              DatabaseHelper.helper.insertDb(model);
+                              print("============== home screen${model.title}");
+                              controller.readData();
+                            },
                             icon: const Icon(
                               Icons.favorite,
                               color: Colors.grey,

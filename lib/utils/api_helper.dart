@@ -17,8 +17,8 @@ class ApiHelper
       {
         List json = jsonDecode(responces.body);
         List<HomeModel>? modelList = json.map((e) => HomeModel.mapToModel(e),).toList();
-        print(" ========================= model list ${modelList.length}");
-        print(" ========================= model list ${modelList[0].title}");
+        // print(" ========================= model list ${modelList.length}");
+        // print(" ========================= model list ${modelList[0].title}");
         return modelList;
       }
     return null;
