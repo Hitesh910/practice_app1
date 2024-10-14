@@ -14,7 +14,7 @@ class DatabaseHelper {
       database = await createDb();
       print("================= database checkDb ${database}");
     }
-    return database;
+    return database!;
   }
 
   Future<Database> createDb() async {
@@ -25,7 +25,7 @@ class DatabaseHelper {
       version: 1,
       onCreate: (db, version) {
         String query =
-            "CREATE TABLE product (cid INTEGER  PRIMARY KEY AUTOINCREMENT,title TEXT,desc TEXT,price INTEGER)";
+            "CREATE TABLE product (cid INTEGER  PRIMARY KEY AUTOINCREMENT,title TEXT,price INTEGER)";
 
         db.execute(query);
         // database!.execute(query);
@@ -35,8 +35,7 @@ class DatabaseHelper {
 
   Future<void> insertDb(DatabaseModel model) async {
     database = await checkDb();
-    // String query = "INSERT INTO product VALUES ";
-    database!.insert("product", {"title": model.title, "price": model.price});
+    database!.insert('product', {'title': model.title,'price': model.price});
     print("============ database ${model.title}");
     // database!.execute(query);
   }
@@ -53,7 +52,7 @@ class DatabaseHelper {
         )
         .toList();
     print("============= database read ${dbData.length}");
-    print("============= database read ${dbData[0].title}");
+    print("============= database read ${dbData[0]}");
     return dbData;
   }
 }
