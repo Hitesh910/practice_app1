@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:get/get_common/get_reset.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:practice_app1/screen/home/model/databse_model.dart';
+import 'package:practice_app1/screen/home/model/firebase_model.dart';
 import 'package:practice_app1/utils/helper/database_helper.dart';
+import 'package:practice_app1/utils/helper/firebase_dbHelper.dart';
 
 import '../../../utils/api_helper.dart';
 import '../controller/home_controller.dart';
@@ -39,10 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
           PopupMenuButton(
             itemBuilder: (context) {
               return [
-                 PopupMenuItem(
+                PopupMenuItem(
                   child: const Text("Database"),
                   onTap: () {
                     Get.toNamed("/database");
+                  },
+                ),
+                PopupMenuItem(
+                  child: const Text("Firebase"),
+                  onTap: () {
+                    Get.toNamed("/firebase");
                   },
                 ),
               ];
@@ -74,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
-                  // mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
@@ -94,7 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               fit: BoxFit.contain,
                             ),
                           ),
-                          // child: Text("${controller.dataList[index].title}"),
                         ),
                       ),
                     ),
@@ -112,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Expanded(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "₹${controller.dataList[index].price}",
@@ -124,9 +130,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           IconButton(
                             onPressed: () {
                               DatabaseModel model = DatabaseModel(
-                                  title: controller.dataList[index].title,
-                                  price: controller.dataList[index].price,
-                                  desc: controller.dataList[index].description);
+                                title: controller.dataList[index].title,
+                                price: controller.dataList[index].price,
+                                desc: controller.dataList[index].description,
+                              );
                               DatabaseHelper.helper.insertDb(model);
                               print("============== home screen${model.title}");
                               controller.readData();
@@ -135,6 +142,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               Icons.favorite,
                               color: Colors.grey,
                             ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              FirebaseModel model = FirebaseModel(
+                                name: controller.dataList[index].title,
+                                desc: controller.dataList[index].description,
+                                price: controller.dataList[index].price,
+                              );
+                              FirebaseDbhelper.helper.setData(model);
+                              FirebaseDbhelper.helper.getData();
+                            },
+                            icon: Icon(Icons.bookmark_add),
                           )
                         ],
                       ),
